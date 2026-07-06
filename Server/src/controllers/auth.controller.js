@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { randomUUID } from "crypto";
 import userModel from "../models/user.modal.js";
 import errorHandler from "../middlewares/errorhandler.js";
 import blacklistModal from "../models/blacklist.modal.js";
@@ -31,6 +32,7 @@ export const registerUserController = errorHandler(async (req, res) => {
   const token = jwt.sign(
     {
       id: user._id,
+      jti:randomUUID(),
     },
     process.env.JWT_SECRET,
     {
@@ -80,6 +82,7 @@ export const loginUserController = errorHandler(async (req, res) => {
   const token = jwt.sign(
     {
       id: user._id,
+      jti:randomUUID(),
     },
     process.env.JWT_SECRET,
     {
@@ -112,3 +115,21 @@ export const logoutController = errorHandler(async (req, res) => {
     message: "User logged out successfully",
   });
 });
+
+export const getMeController = errorHandler(async(req,res)=>{
+  const user = await userModel.findById(req.user.id)
+  if(!user){
+    return res.status(401).json({
+      message:"Unauthorized"
+    })
+  }
+  res.status(201).json({
+    message:"Your are logged in",
+    user:{
+      userName:user.userName,
+      email:user.email,
+      id:user._id
+    }
+  })
+  
+})

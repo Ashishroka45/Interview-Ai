@@ -11,3 +11,4 @@ const blacklistSchema = new mongoose.Schema({
 const blacklistModal = mongoose.model("blacklistedTokens",blacklistSchema)
 
 export default blacklistModal   
+

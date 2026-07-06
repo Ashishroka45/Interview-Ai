@@ -1,0 +1,110 @@
+main {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+  max-width: 420px;
+
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.08),
+    0 5px 10px rgba(0, 0, 0, 0.04);
+
+  animation: fadeUp .5s ease;
+}
+
+form h1 {
+  font-size: 30px;
+  color: #1e293b;
+  text-align: center;
+}
+
+form p {
+  color: #64748b;
+  text-align: center;
+  margin-top: 8px;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.input-group label {
+  margin-bottom: 8px;
+  color: #334155;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.input-group input {
+  height: 50px;
+  padding: 0 15px;
+
+  border: 1px solid #dbe2ea;
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  transition: .25s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #4f46e5;
+
+  box-shadow: 0 0 0 4px rgba(79, 70, 229, .15);
+}
+
+
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 500px) {
+  form {
+    padding: 30px 24px;
+  }
+
+  form h1 {
+    font-size: 26px;
+  }
+}
+
+.auth-link {
+  margin-top: 20px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.auth-link a {
+  color: #4f46e5;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.auth-link a:hover {
+  color: #3730a3;
+  text-decoration: underline;
+}
