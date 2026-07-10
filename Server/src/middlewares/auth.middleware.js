@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import blacklistModal from "../models/blacklist.modal.js";
+import blacklistModal from "../models/blacklist.model.js";
 
  export async  function authMiddleware(req,res,next){
     const token= req.cookies.token;

@@ -108,3 +108,26 @@ form p {
   color: #3730a3;
   text-decoration: underline;
 }
+.input-group {
+  margin-bottom: 18px;
+}
+
+.error-message {
+  display: block;
+  min-height: 18px; /* Prevents layout jumping */
+  margin-top: 6px;
+  color: #dc2626;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.input-error {
+  border-color: #dc2626 !important;
+  background: #fef2f2;
+}
+
+.input-error:focus {
+  border-color: #dc2626 !important;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15) !important;
+}

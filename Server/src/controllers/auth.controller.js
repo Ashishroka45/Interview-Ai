@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import { randomUUID } from "crypto";
-import userModel from "../models/user.modal.js";
+import userModel from "../models/user.model.js";
 import errorHandler from "../middlewares/errorhandler.js";
-import blacklistModal from "../models/blacklist.modal.js";
+import blacklistModal from "../models/blacklist.model.js";
 
 export const registerUserController = errorHandler(async (req, res) => {
   const { email, userName, password } = req.body;

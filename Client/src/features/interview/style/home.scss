@@ -1,0 +1,437 @@
+/* ============================================
+   HOME PAGE — Dark Interview Plan UI
+   ============================================ */
+
+.Home {
+  min-height: 100vh;
+  background: #0b0d14; /* Deep dark page background */
+  padding: 3rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Inter", "Poppins", sans-serif;
+  color: #e2e8f0;
+
+  /* ---------- Hero Section ---------- */
+  .hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+
+    h1 {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.5px;
+      line-height: 1.25;
+      margin: 0 0 0.75rem 0;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #f43f5e, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: #64748b;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+
+  /* ---------- Card Container ---------- */
+  .card-container {
+    max-width: 1080px;
+    width: 100%;
+    background: #11131e; /* Dark card background */
+    border: 1px solid #1e2330;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+
+  /* ---------- Form Content (2 columns) ---------- */
+  .form-content {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 1.75rem;
+    padding: 2rem;
+  }
+
+  /* ---------- Form Columns ---------- */
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .left-column {
+    .textarea-wrapper {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        flex: 1;
+        width: 100%;
+        min-height: 400px;
+        background: #090a10; /* Lighter dark area for inputs */
+        border: 1px solid #1f2433;
+        border-radius: 12px;
+        padding: 1.25rem;
+        font-size: 0.9rem;
+        line-height: 1.65;
+        color: #e2e8f0;
+        resize: none;
+        font-family: inherit;
+        transition: border-color 0.25s, box-shadow 0.25s;
+
+        &:focus {
+          outline: none;
+          border-color: #f43f5e;
+          box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+        }
+
+        &::placeholder {
+          color: #4b5563;
+        }
+      }
+
+      .char-counter {
+        position: absolute;
+        bottom: 1.25rem;
+        right: 1.25rem;
+        font-size: 0.78rem;
+        color: #4b5563;
+        pointer-events: none;
+      }
+    }
+  }
+
+  .right-column {
+    gap: 1.25rem;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      label {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: #f1f5f9;
+      }
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  /* ---------- Section Header ---------- */
+  .column-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+
+    .icon-container {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: #f43f5e;
+
+      &.profile-icon {
+        color: #f43f5e;
+      }
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin: 0;
+    }
+  }
+
+  /* ---------- Badges ---------- */
+  .badge {
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge.required {
+    background: rgba(13, 189, 60, 0.15);
+    color: #20e00e;
+    border: 1px solid rgba(244, 63, 94, 0.25);
+  }
+
+  .badge.best-results {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+  }
+
+  /* ---------- File Drop Zone ---------- */
+  .file-drop-zone {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.5rem;
+    border: 1.5px dashed #222638;
+    border-radius: 12px;
+    background: #090a10;
+    cursor: pointer;
+    transition: border-color 0.25s, background-color 0.25s;
+
+    &:hover {
+      border-color: #f43f5e;
+      background-color: rgba(244, 63, 94, 0.03);
+    }
+
+    .upload-icon {
+      color: #f43f5e;
+      margin-bottom: 0.6rem;
+      display: inline-flex;
+    }
+
+    .drop-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 0;
+    }
+
+    .drop-hint {
+      font-size: 0.72rem;
+      color: #4b5563;
+      margin: 0.25rem 0 0;
+    }
+
+    .file-selected {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .file-icon {
+        font-size: 1.25rem;
+      }
+
+      .file-name {
+        font-size: 0.85rem;
+        color: #10b981;
+        font-weight: 600;
+      }
+    }
+  }
+
+  /* ---------- Divider ---------- */
+  .divider-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: #1e2330;
+    }
+
+    .divider-text {
+      font-size: 0.72rem;
+      color: #4b5563;
+      font-weight: 700;
+    }
+  }
+
+  /* ---------- Self Description ---------- */
+  .self-desc-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      min-height: 110px;
+      background: #090a10;
+      border: 1px solid #1f2433;
+      border-radius: 12px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: #e2e8f0;
+      resize: none;
+      font-family: inherit;
+      transition: border-color 0.25s, box-shadow 0.25s;
+
+      &:focus {
+        outline: none;
+        border-color: #f43f5e;
+        box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+      }
+
+      &::placeholder {
+        color: #4b5563;
+      }
+    }
+  }
+
+  /* ---------- Info Note ---------- */
+  .info-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+    background: rgba(30, 58, 138, 0.25);
+    border-radius: 10px;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+
+    .info-dot {
+      color: #3b82f6;
+      display: inline-flex;
+      margin-top: 1px;
+    }
+
+    p {
+      font-size: 0.78rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      margin: 0;
+
+      strong {
+        color: #f1f5f9;
+        font-weight: 600;
+      }
+    }
+  }
+
+  /* ---------- Card Footer ---------- */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: #0d0f17;
+    border-top: 1px solid #1e2330;
+
+    .footer-meta {
+      font-size: 0.78rem;
+      color: #4b5563;
+      font-weight: 500;
+    }
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.75rem;
+    background: linear-gradient(135deg, #f43f5e, #ec4899);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+
+    .cta-star {
+      font-size: 0.85rem;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.4);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  /* ---------- Page Footer ---------- */
+  .page-footer {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+
+    a {
+      font-size: 0.8rem;
+      color: #4b5563;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #94a3b8;
+      }
+    }
+  }
+
+  /* ---------- Responsive — Tablet ---------- */
+  @media (max-width: 992px) {
+    padding: 2rem 1.5rem;
+
+    .hero h1 {
+      font-size: 1.8rem;
+    }
+
+    .form-content {
+      grid-template-columns: 1fr;
+      padding: 1.5rem;
+    }
+
+    .left-column .textarea-wrapper textarea {
+      min-height: 300px;
+    }
+  }
+
+  /* ---------- Responsive — Mobile ---------- */
+  @media (max-width: 576px) {
+    padding: 1.5rem 1rem;
+
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+
+    .form-content {
+      padding: 1.25rem;
+    }
+
+    .left-column .textarea-wrapper textarea {
+      min-height: 250px;
+    }
+
+    .card-footer {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .cta-button {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .page-footer {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+    }
+  }
+}

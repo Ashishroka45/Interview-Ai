@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../auth.form.scss";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useAuth } from "../hooks/auth.context";
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { handleLogin, handleRegister, handleLogOut, user, loading } =
-    useAuth();
+  const { handleLogin, user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/");
+    }
+  }, [user, loading, navigate]);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     await handleLogin({ email, password });
+    navigate("/");
   };
 
   if (loading) {
