@@ -1,13 +1,15 @@
 import { useState, useRef } from "react";
 import "../style/home.scss";
-
+import {useNavigate} from "react-router"
+import { useInterview } from "../hooks/useInterview";
 export function Home() {
   const [jobDescription, setJobDescription] = useState("");
   const [selfDescription, setSelfDescription] = useState("");
   const [resumeFile, setResumeFile] = useState(null);
   const fileInputRef = useRef(null);
   const maxChars = 5000;
-
+    const {loading,generateReport} = useInterview()
+    const navigate = useNavigate()
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -26,6 +28,22 @@ export function Home() {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
+
+  const generateInterviewReport =async  ()=>{
+    console.log("Button clicked");
+    
+    const resume = fileInputRef.current.files[0];
+    if(!jobDescription || !selfDescription || !resume){
+      alert("Please fill all the fields")
+      return
+    }
+  const data=await generateReport({jobDescription,selfDescription,resume})
+  console.log("data",data);
+  navigate(`/interview/${data?._id}`)
+  }
+  
+ 
+ 
 
   return (
     <main className="Home">
@@ -206,8 +224,12 @@ export function Home() {
           <span className="footer-meta">
             AI-Powered Strategy Generation • Approx 30s
           </span>
-          <button className="cta-button">
-            <span className="cta-star">★</span> Generate My Interview Strategy
+          <button className="cta-button"
+          onClick={generateInterviewReport}
+          disabled={loading}
+          >
+            <span className="cta-star">★</span> 
+            {loading ? "Generating..." : "Generate My Interview Strategy"}
           </button>
         </div>
       </div>

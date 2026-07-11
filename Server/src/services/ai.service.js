@@ -14,7 +14,7 @@ const interviewReportSchema = z.object({
     .describe(
       "Overall compatibility score between the candidate and the job description.",
     ),
-
+    title:z.string().describe("The title for the job which the interview report is generated."),
   technicalQuestions: z
     .array(
       z.object({
@@ -53,7 +53,7 @@ const interviewReportSchema = z.object({
     )
     .describe("List of behavioral interview questions."),
 
-  skillsGap: z
+  skillGap: z
     .array(
       z.object({
         skill: z.string().describe("A missing or weak skill."),
@@ -72,9 +72,9 @@ const interviewReportSchema = z.object({
 
         focus: z.string().describe("Main learning objective for the day."),
 
-        topics: z
+        task: z
           .array(z.string().describe("A topic to study."))
-          .describe("Topics to cover during the day."),
+          .describe("Tasks to cover during the day."),
       }),
     )
     .describe("A day-by-day interview preparation plan."),
