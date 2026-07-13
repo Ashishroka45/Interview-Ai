@@ -1,6 +1,6 @@
 import express from "express";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { generateInterviewReportController,getInterviewReportById,getAllInterviewReports } from "../controllers/interview.controller.js";
+import { generateInterviewReportController,getInterviewReportById,getAllInterviewReports, generateReport } from "../controllers/interview.controller.js";
 import upload from "../middlewares/file.middleware.js"
 const interviewRoute = express.Router();
 
@@ -13,6 +13,7 @@ const interviewRoute = express.Router();
 interviewRoute.post("/",authMiddleware,upload.single("resume"),generateInterviewReportController)
 interviewRoute.get("/report/:interviewId",authMiddleware,getInterviewReportById )
 interviewRoute.get("/",authMiddleware,getAllInterviewReports )
+interviewRoute.post("/generatepdf/:interviewId",authMiddleware,generateReport)
 
 
 export default interviewRoute;

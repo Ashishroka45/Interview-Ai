@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import "../style/home.scss";
-import {useNavigate} from "react-router"
+import { useNavigate } from "react-router";
 import { useInterview } from "../hooks/useInterview";
 export function Home() {
   const [jobDescription, setJobDescription] = useState("");
@@ -8,8 +8,8 @@ export function Home() {
   const [resumeFile, setResumeFile] = useState(null);
   const fileInputRef = useRef(null);
   const maxChars = 5000;
-    const {loading,generateReport} = useInterview()
-    const navigate = useNavigate()
+  const { loading, generateReport, reports,getReports } = useInterview();
+  const navigate = useNavigate();
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -28,29 +28,35 @@ export function Home() {
   const handleDragOver = (e) => {
     e.preventDefault();
   };
+  useEffect(()=>{
+    getReports()
+  },[])
 
-  const generateInterviewReport =async  ()=>{
+  const generateInterviewReport = async () => {
     console.log("Button clicked");
-    
+
     const resume = fileInputRef.current.files[0];
-    if(!jobDescription || !selfDescription || !resume){
-      alert("Please fill all the fields")
-      return
+    if (!jobDescription || !selfDescription || !resume) {
+      alert("Please fill all the fields");
+      return;
     }
-  const data=await generateReport({jobDescription,selfDescription,resume})
-  console.log("data",data);
-  navigate(`/interview/${data?._id}`)
-  }
-  
- 
- 
+    const data = await generateReport({
+      jobDescription,
+      selfDescription,
+      resume,
+    });
+    console.log("data", data);
+    navigate(`/interview/${data?._id}`);
+  };
+       console.log("Reports", reports);
 
   return (
     <main className="Home">
       {/* Hero Section */}
       <section className="hero">
         <h1>
-          Create Your Custom <span className="gradient-text">Interview Plan</span>
+          Create Your Custom{" "}
+          <span className="gradient-text">Interview Plan</span>
         </h1>
         <p className="subtitle">
           Let our AI analyze the job requirements and your unique profile to
@@ -158,7 +164,9 @@ export function Home() {
                         <line x1="12" y1="3" x2="12" y2="15" />
                       </svg>
                     </span>
-                    <p className="drop-text">Click to upload or drag &amp; drop</p>
+                    <p className="drop-text">
+                      Click to upload or drag &amp; drop
+                    </p>
                     <p className="drop-hint">PDF or DOCX (Max 5MB)</p>
                   </>
                 )}
@@ -224,16 +232,43 @@ export function Home() {
           <span className="footer-meta">
             AI-Powered Strategy Generation • Approx 30s
           </span>
-          <button className="cta-button"
-          onClick={generateInterviewReport}
-          disabled={loading}
+          <button
+            className="cta-button"
+            onClick={generateInterviewReport}
+            disabled={loading}
           >
-            <span className="cta-star">★</span> 
+            <span className="cta-star">★</span>
             {loading ? "Generating..." : "Generate My Interview Strategy"}
           </button>
         </div>
       </div>
-
+      <div className="footer">
+        <div className="container">
+          <h2>My recent interview plans</h2>
+          {reports.map((report) => {
+       
+            return (
+              <div className="report"
+              key={report._id}
+              onClick={()=>{navigate(`/interview/${report._id}`)}}
+              >
+                <div className="report-header">
+                  <h3>{report.title || "United Position"}</h3>
+                  <p>
+                    Generated on{" "}
+                    {new Date(report.createdAt).toLocaleDateString()}
+                  </p>
+                  <p
+                    className={
+                      report.matchScore >= 80 ? "score-high" : "score-low"
+                    }
+                  >{`Match Score ${report.matchScore}`}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       {/* Footer Links */}
       <footer className="page-footer">
         <a href="#privacy">Privacy Policy</a>

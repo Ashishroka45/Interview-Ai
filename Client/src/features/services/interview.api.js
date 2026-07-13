@@ -29,6 +29,8 @@ export async function generateInterviewReport({
 export async function getAllInterviewReports() {
   try {
     const response = await api.get("/");
+    console.log("Get response from backend",response);
+    
     return response.data;
   } catch (error) {
     console.log(error);
@@ -43,3 +45,15 @@ export async function getInterviewReportById({interviewId}) {
     console.log(error);
   }
 }
+
+export async function  generateResume({interviewId}){
+  try {
+    const response = await api.post(`/generatepdf/${interviewId}`,null,{
+        responseType:"blob"
+    }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+} 

@@ -11,7 +11,153 @@
   align-items: center;
   font-family: "Inter", "Poppins", sans-serif;
   color: #e2e8f0;
+  /* ============================================
+   RECENT INTERVIEW REPORTS
+   ============================================ */
 
+.footer {
+  width: 100%;
+  max-width: 1080px;
+  margin-top: 3rem;
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0 0 0.5rem;
+    }
+  }
+
+  .report {
+    background: #11131e;
+    border: 1px solid #1e2330;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    transition: all 0.25s ease;
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-3px);
+      border-color: #f43f5e;
+      box-shadow: 0 12px 30px rgba(244, 63, 94, 0.18);
+    }
+
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+
+      h3 {
+        flex: 1;
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #f8fafc;
+      }
+
+      p {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #94a3b8;
+      }
+
+      .score-high,
+      .score-low {
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .score-high {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.25);
+      }
+
+      .score-low {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid rgba(239, 68, 68, 0.25);
+      }
+    }
+  }
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .Home {
+    .footer {
+      margin-top: 2rem;
+
+      .container {
+        h2 {
+          font-size: 1.3rem;
+          text-align: center;
+        }
+      }
+
+      .report {
+        padding: 1rem;
+
+        .report-header {
+          flex-direction: column;
+          align-items: flex-start;
+
+          h3 {
+            font-size: 1rem;
+          }
+
+          p {
+            font-size: 0.8rem;
+          }
+
+          .score-high,
+          .score-low {
+            align-self: flex-start;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .Home {
+    .footer {
+      .report {
+        padding: 0.9rem;
+
+        .report-header {
+          h3 {
+            font-size: 0.95rem;
+          }
+
+          p {
+            font-size: 0.75rem;
+          }
+
+          .score-high,
+          .score-low {
+            width: 100%;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
   /* ---------- Hero Section ---------- */
   .hero {
     text-align: center;
