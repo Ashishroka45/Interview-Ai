@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import "../auth.form.scss";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "../hooks/auth.context";
+
 export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [validationError, setValidationError] = useState("");
   const { handleLogin, user, loading } = useAuth();
   const navigate = useNavigate();
 
@@ -16,23 +18,30 @@ export function Login() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin({ email, password });
-    navigate("/");
+    setValidationError("");
+    
+    if (!email.trim() || !password.trim()) {
+      setValidationError("Please fill in all fields.");
+      return;
+    }
+    
+    const result = await handleLogin({ email, password });
+    if (result?.success) {
+      navigate("/");
+    }
   };
-
-  if (loading) {
-    return (
-      <main>
-        <h1>Loading...</h1>
-      </main>
-    );
-  }
 
   return (
     <main className="form-container">
       <form onSubmit={onSubmit}>
         <h1>Welcome Back 👋</h1>
         <p>Login to continue to your account</p>
+
+        {validationError && (
+          <div className="error-message" style={{ textAlign: "center", marginBottom: "15px" }}>
+            ⚠️ {validationError}
+          </div>
+        )}
 
         <div className="input-group">
           <label htmlFor="email">Email</label>
@@ -41,6 +50,7 @@ export function Login() {
             id="email"
             placeholder="Enter your email"
             value={email}
+            disabled={loading}
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -52,13 +62,20 @@ export function Login() {
             id="password"
             placeholder="Enter your password"
             value={password}
+            disabled={loading}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <button className="button primary-button">Login</button>
+        <button 
+          className="button primary-button" 
+          disabled={loading}
+        >
+          {loading ? "Logging in..." : "Login"}
+        </button>
+        
         <p className="auth-link">
-          Don't have an account?<Link to={"/register"}>Register</Link>
+          Don't have an account? <Link to={"/register"}>Register</Link>
         </p>
       </form>
     </main>

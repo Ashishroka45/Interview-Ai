@@ -1,19 +1,18 @@
 import {RouterProvider} from "react-router"
 import { router } from "./app.route.jsx"
 import { AuthProvider } from "./features/auth/auth.context.jsx"
-import {InterviewProvider} from "./features/interview/interview.context.jsx"
+import { InterviewProvider } from "./features/interview/interview.context.jsx"
+import { ToastProvider } from "./components/Toast/ToastContext"
 
 function App() {
-
-
   return (
-    <AuthProvider>
-      <InterviewProvider>
-
-        <RouterProvider router={router}/>
-
-      </InterviewProvider>
-    </AuthProvider>
+    <ToastProvider>
+      <AuthProvider>
+        <InterviewProvider>
+          <RouterProvider router={router}/>
+        </InterviewProvider>
+      </AuthProvider>
+    </ToastProvider>
   )
 }
 

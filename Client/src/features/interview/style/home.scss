@@ -515,7 +515,7 @@
     display: flex;
     gap: 2rem;
 
-    a {
+    a,h5 {
       font-size: 0.8rem;
       color: #4b5563;
       text-decoration: none;
@@ -578,6 +578,121 @@
       flex-direction: column;
       align-items: center;
       gap: 0.75rem;
+    }
+  }
+
+  /* Offline banner */
+  .offline-banner {
+    width: 100%;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 10px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    max-width: 1080px;
+    box-sizing: border-box;
+  }
+
+  /* Form Validation error */
+  .form-validation-error-banner {
+    background: rgba(244, 63, 94, 0.1);
+    border: 1px solid rgba(244, 63, 94, 0.2);
+    color: #fda4af;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 10px 2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  /* File removal button */
+  .remove-file-btn {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: auto;
+    transition: background-color 0.2s;
+    &:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+
+  button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: 0.25s ease;
+  }
+
+  .page-btn {
+    background: #1a1f2d;
+    color: #e2e8f0;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background: #2a3246;
+    }
+
+    &:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+  }
+
+  .page-number {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: #141824;
+    color: #cbd5e1;
+    font-weight: 600;
+
+    &:hover {
+      background: #222b3d;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #f43f5e, #ec4899);
+      color: white;
+      box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .pagination {
+    gap: 0.5rem;
+
+    .page-btn {
+      padding: 0.6rem 0.9rem;
+      font-size: 0.85rem;
+    }
+
+    .page-number {
+      width: 36px;
+      height: 36px;
+      font-size: 0.9rem;
     }
   }
 }

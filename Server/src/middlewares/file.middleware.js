@@ -1,5 +1,5 @@
 import multer from "multer"
-
+import AppError from "../utils/AppError.js"
 
 const upload = multer({
     storage:multer.memoryStorage(),
@@ -10,7 +10,7 @@ const upload = multer({
             cb(null,true);
         }
         else{
-            cb(null,false)
+            cb(new AppError("Only PDF resumes are allowed.", 400, "INVALID_FILE_TYPE"), false)
         }
     }
 })

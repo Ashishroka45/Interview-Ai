@@ -1,12 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../style/interview.scss";
 
 import { useInterview } from "../hooks/useInterview";
 import { useParams } from "react-router";
-
-
-
-
+import SkeletonLoader from "../../../components/UI/SkeletonLoader";
+import ErrorMessage from "../../../components/UI/ErrorMessage";
 
 /* ── Severity helpers ─────────────────────── */
 const severityLabel = { high: "High", medium: "Medium", low: "Low" };
@@ -45,30 +43,61 @@ const NAV_ITEMS = [
    ══════════════════════════════════════════ */
 export function Interview() {
   const [activeSection, setActiveSection] = useState("technical");
-  const {report,loading,downloadResume} = useInterview()
-  const {interviewId} = useParams();
-  // console.log("Report1",report?.technicalQuestions);
+  const { report, loading, error, getReportById, downloadResume } = useInterview();
+  const { interviewId } = useParams();
 
-  if(loading || !report){
+  const handleDownloadResume = () => {
+    downloadResume({ interviewId });
+  };
+
+  // If there's an error fetching the report, show a retry card
+  if (error) {
     return (
-      <div className="Home">
-        <h1>Loading...</h1>
-      </div>
-    )
+      <main className="Home" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+        <ErrorMessage
+          title="Report Loading Failed"
+          message={error.message || "We couldn't retrieve your interview preparation report."}
+          code={error.code}
+          detail={error.detail}
+          isNetworkError={error.isNetworkError}
+          onRetry={() => getReportById({ interviewId })}
+        />
+      </main>
+    );
   }
-  // console.log("Report",report);
-  const handleDownloadResume=()=>{
-    downloadResume({interviewId})
+
+  // If loading and no report exists, show skeletons
+  if (loading && !report) {
+    return (
+      <main className="InterviewReport" style={{ background: "#0b0d14", minHeight: "100vh" }}>
+        <SkeletonLoader type="dashboard" />
+      </main>
+    );
   }
+
+  // Fallback if no report and no loading state (though getReportById is called by hook on mount)
+  if (!report) {
+    return (
+      <main className="Home" style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+        <ErrorMessage
+          title="No Report Found"
+          message="This interview report could not be found."
+          code="REPORT_NOT_FOUND"
+          onRetry={() => getReportById({ interviewId })}
+        />
+      </main>
+    );
+  }
+
   /* ── Render helpers ─────────────────────── */
   const renderTechnicalQuestions = () => (
     <div className="section-content">
       <div className="section-header">
         <h2>Technical Questions</h2>
-        <span className="question-count">{report.technicalQuestions.length} Questions</span>
+        <span className="question-count">{report.technicalQuestions?.length || 0} Questions</span>
       </div>
       <div className="questions-list">
-        {report.technicalQuestions.map((q, i) => (
+        {report.technicalQuestions?.map((q, i) => (
           <div className="question-card" key={i}>
             <div className="question-number">Q{i + 1}</div>
             <div className="question-body">
@@ -92,10 +121,10 @@ export function Interview() {
     <div className="section-content">
       <div className="section-header">
         <h2>Behavioural Questions</h2>
-        <span className="question-count">{report.behaviouralQuestions.length} Questions</span>
+        <span className="question-count">{report.behaviouralQuestions?.length || 0} Questions</span>
       </div>
       <div className="questions-list">
-        {report.behaviouralQuestions.map((q, i) => (
+        {report.behaviouralQuestions?.map((q, i) => (
           <div className="question-card" key={i}>
             <div className="question-number">Q{i + 1}</div>
             <div className="question-body">
@@ -119,16 +148,16 @@ export function Interview() {
     <div className="section-content">
       <div className="section-header">
         <h2>Preparation Roadmap</h2>
-        <span className="question-count">{report.preparationPlan.length}-Day Plan</span>
+        <span className="question-count">{report.preparationPlan?.length || 0}-Day Plan</span>
       </div>
       <div className="roadmap-list">
-        {report.preparationPlan.map((day, i) => (
+        {report.preparationPlan?.map((day, i) => (
           <div className="roadmap-card" key={i}>
             <div className="day-badge">Day {day.day}</div>
             <div className="roadmap-body">
               <h4 className="roadmap-focus">{day.focus}</h4>
               <ul className="task-list">
-                {day.task.map((t, j) => (
+                {day.task?.map((t, j) => (
                   <li key={j}>
                     <span className="task-bullet">▸</span>
                     {t}
@@ -155,10 +184,8 @@ export function Interview() {
     }
   };
 
-
   /* ── JSX ────────────────────────────────── */
   return (
-    
     <main className="InterviewReport">
       {/* ── LEFT SIDEBAR ── */}
       <aside className="sidebar-left">
@@ -180,16 +207,16 @@ export function Interview() {
               />
               <path
                 className="circle-fill"
-                strokeDasharray={`${report.matchScore}, 100`}
+                strokeDasharray={`${report.matchScore || 0}, 100`}
                 d="M18 2.0845
                    a 15.9155 15.9155 0 0 1 0 31.831
                    a 15.9155 15.9155 0 0 1 0 -31.831"
               />
             </svg>
-            <span className="score-value">{report.matchScore}%</span>
+            <span className="score-value">{report.matchScore || 0}%</span>
           </div>
         </div>
-          
+
         {/* Navigation */}
         <nav className="sidebar-nav">
           {NAV_ITEMS.map((item) => (
@@ -202,13 +229,18 @@ export function Interview() {
               <span className="nav-label">{item.label}</span>
             </button>
           ))}
-          
-            <button className="button" onClick={handleDownloadResume}>
-              
-            <svg height={"0.8rem"} style={{ marginRight: "0.8rem" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.6144 17.7956 11.492 15.7854C12.2731 13.9966 13.6789 12.5726 15.4325 11.7942L17.8482 10.7219C18.6162 10.381 18.6162 9.26368 17.8482 8.92277L15.5079 7.88394C13.7092 7.08552 12.2782 5.60881 11.5105 3.75894L10.6215 1.61673C10.2916.821765 9.19319.821767 8.8633 1.61673L7.97427 3.75892C7.20657 5.60881 5.77553 7.08552 3.97685 7.88394L1.63658 8.92277C.868537 9.26368.868536 10.381 1.63658 10.7219L4.0523 11.7942C5.80589 12.5726 7.21171 13.9966 7.99275 15.7854L8.8704 17.7956C9.20776 18.5682 10.277 18.5682 10.6144 17.7956ZM19.4014 22.6899 19.6482 22.1242C20.0882 21.1156 20.8807 20.3125 21.8695 19.8732L22.6299 19.5353C23.0412 19.3526 23.0412 18.7549 22.6299 18.5722L21.9121 18.2532C20.8978 17.8026 20.0911 16.9698 19.6586 15.9269L19.4052 15.3156C19.2285 14.8896 18.6395 14.8896 18.4628 15.3156L18.2094 15.9269C17.777 16.9698 16.9703 17.8026 15.956 18.2532L15.2381 18.5722C14.8269 18.7549 14.8269 19.3526 15.2381 19.5353L15.9985 19.8732C16.9874 20.3125 17.7798 21.1156 18.2198 22.1242L18.4667 22.6899C18.6473 23.104 19.2207 23.104 19.4014 22.6899Z"></path></svg>
-             Generate Resume
-              </button>
-        
+
+          <button 
+            className="button" 
+            onClick={handleDownloadResume}
+            disabled={loading}
+            style={{ marginTop: "1rem", display: "inline-flex", alignItems: "center", justifyContent: "center" }}
+          >
+            <svg height={"0.8rem"} style={{ marginRight: "0.8rem" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10.6144 17.7956 11.492 15.7854C12.2731 13.9966 13.6789 12.5726 15.4325 11.7942L17.8482 10.7219C18.6162 10.381 18.6162 9.26368 17.8482 8.92277L15.5079 7.88394C13.7092 7.08552 12.2782 5.60881 11.5105 3.75894L10.6215 1.61673C10.2916.821765 9.19319.821767 8.8633 1.61673L7.97427 3.75892C7.20657 5.60881 5.77553 7.08552 3.97685 7.88394L1.63658 8.92277C.868537 9.26368.868536 10.381 1.63658 10.7219L4.0523 11.7942C5.80589 12.5726 7.21171 13.9966 7.99275 15.7854L8.8704 17.7956C9.20776 18.5682 10.277 18.5682 10.6144 17.7956ZM19.4014 22.6899 19.6482 22.1242C20.0882 21.1156 20.8807 20.3125 21.8695 19.8732L22.6299 19.5353C23.0412 19.3526 23.0412 18.7549 22.6299 18.5722L21.9121 18.2532C20.8978 17.8026 20.0911 16.9698 19.6586 15.9269L19.4052 15.3156C19.2285 14.8896 18.6395 14.8896 18.4628 15.3156L18.2094 15.9269C17.777 16.9698 16.9703 17.8026 15.956 18.2532L15.2381 18.5722C14.8269 18.7549 14.8269 19.3526 15.2381 19.5353L15.9985 19.8732C16.9874 20.3125 17.7798 21.1156 18.2198 22.1242L18.4667 22.6899C18.6473 23.104 19.2207 23.104 19.4014 22.6899Z" />
+            </svg>
+            {loading ? "Downloading..." : "Generate Resume"}
+          </button>
         </nav>
 
         <div className="sidebar-footer">
@@ -223,11 +255,11 @@ export function Interview() {
       <aside className="sidebar-right">
         <div className="skills-gap-header">
           <h3>Skills Gap</h3>
-          <span className="skills-count">{report.skillGap.length}</span>
+          <span className="skills-count">{report.skillGap?.length || 0}</span>
         </div>
 
         <div className="skills-list">
-          {report.skillGap.map((s, i) => (
+          {report.skillGap?.map((s, i) => (
             <div className={`skill-chip severity-${s.severity}`} key={i}>
               <span className="skill-icon">{severityIcon[s.severity]}</span>
               <span className="skill-name">{s.skill}</span>

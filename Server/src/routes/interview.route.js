@@ -12,7 +12,7 @@ const interviewRoute = express.Router();
 
 interviewRoute.post("/",authMiddleware,upload.single("resume"),generateInterviewReportController)
 interviewRoute.get("/report/:interviewId",authMiddleware,getInterviewReportById )
-interviewRoute.get("/",authMiddleware,getAllInterviewReports )
+interviewRoute.get("/reports",authMiddleware,getAllInterviewReports )
 interviewRoute.post("/generatepdf/:interviewId",authMiddleware,generateReport)
 
 
