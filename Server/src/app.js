@@ -9,7 +9,7 @@ import AppError from "./utils/AppError.js";
 const app = express();
 
 app.use(cors({
-    origin:"https://interview-ai-dfa2.vercel.app/",
+    origin:"https://interview-ai-dfa2.vercel.app",
     credentials:true
 }));
 app.use(cookieParser());
