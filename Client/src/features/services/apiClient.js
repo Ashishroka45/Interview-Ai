@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: "https://interview-ai-to7w.onrender.com/api",
   withCredentials: true,
   timeout: 45000, // 45 seconds timeout for heavy AI generations
 }); 

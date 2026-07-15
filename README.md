@@ -109,7 +109,7 @@ Start the server:
 npm run dev
 ```
 
-The API will run on `http://localhost:8000` by default.
+The API will run on `https://interview-ai-to7w.onrender.com/api` by default.
 
 ### 3. Set up the frontend
 
