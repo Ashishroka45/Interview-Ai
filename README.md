@@ -119,7 +119,7 @@ npm install
 npm run dev
 ```
 
-The client will run on `http://localhost:5173` by default (as expected by the server's CORS configuration).
+The client will run on `https://interview-ai-dfa2.vercel.app/` by default (as expected by the server's CORS configuration).
 
 ## API Reference
 
