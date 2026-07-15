@@ -17,7 +17,9 @@ export async function generateInterviewReport({
 }
 
 export async function getAllInterviewReports({page = 1, limit = 5}) {
-  const response = await apiClient.get(`/interview/reports?page=${page}&limit=${limit}`);
+  const response = await apiClient.get(`/interview/reports?page=${page}&limit=${limit}`,
+    
+  );
   // console.log("Response in api ",response.data);
   return response.data; 
 }

@@ -7,9 +7,13 @@ import globalErrorHandler from "./middlewares/globalErrorHandler.js";
 import AppError from "./utils/AppError.js";
 
 const app = express();
+const allowedOrigins=[
+    "https://interview-ai-dfa2.vercel.app",
+    "http://localhost:5173",
+]
 
 app.use(cors({
-    origin:"https://interview-ai-dfa2.vercel.app",
+    origin:allowedOrigins,
     credentials:true
 }));
 app.use(cookieParser());
